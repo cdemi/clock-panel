@@ -139,18 +139,18 @@ export class ClockCtrl extends PanelCtrl {
   }
 
   renderCountdown() {
-    if (!this.panel.countdownSettings.endCountdownTime) {
-      this.time = this.panel.countdownSettings.endText;
-    }
+    //if (!this.panel.countdownSettings.endCountdownTime) {
+    //  this.time = this.panel.countdownSettings.endText;
+    //}
 
     const now = moment().tz(this.tz());
-    const timeLeft = moment.duration(moment(this.panel.countdownSettings.endCountdownTime).utcOffset(moment.tz(this.tz()).format('Z'), true).diff(now));
+    const timeLeft = moment.duration(now.diff(moment(this.panel.countdownSettings.endCountdownTime).utcOffset(moment.tz(this.tz()).format('Z'), true)));
     let formattedTimeLeft = '';
 
-#    if (timeLeft.asSeconds() <= 0) {
-#      this.time = this.panel.countdownSettings.endText;
-#      return;
-#    }
+    if (timeLeft.asSeconds() <= 0) {
+      this.time = this.panel.countdownSettings.endText;
+      return;
+    }
 
     if (this.panel.countdownSettings.customFormat === 'auto') {
       this.time = (timeLeft as any).format();
